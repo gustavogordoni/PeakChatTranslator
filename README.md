@@ -1,38 +1,35 @@
 # PeakChatTranslator
 
-Automatic chat translation for **PEAK** (via [PeakTextChat](https://thunderstore.io/c/peak/p/borealityy/PeakTextChat/)).
-
 [🇧🇷 Português](https://github.com/gustavogordoni/PeakChatTranslator/blob/main/README.ptbr.md) | **English**
+
+Automatic chat translation for **PEAK** (via [PeakTextChat](https://thunderstore.io/c/peak/p/borealityy/PeakTextChat/)).
 
 ## Features
 
 ### Incoming message translation
 - Automatically translates other players' messages to your configured language
 - Shows original message + translation below with colored prefix `[TR-XX]`
-- Supports **PT**, **EN**, **ES** (dropdown selection in Mod Config)
-- Default provider: **MyMemory** (free, no API key, auto-detect language)
+- Supports **100+ languages** via MyMemory (free, no API key, auto-detect)
+- Includes Asian languages: Korean (ko), Japanese (ja), Chinese (zh), Russian (ru), Arabic (ar), Hindi (hi), Thai (th), Vietnamese (vi), and many more
 
 ### Outgoing translation (command)
-- `/tr your message` → sends original + public translation to everyone
-- Configurable languages: `OutgoingSourceLanguage` (your language) → `OutgoingTargetLanguage` (target language)
+- `/tr your message` → sends **only the translated message** (no duplicate original)
+- Prevents double-translation when recipients also have the mod
+- Target language configurable in "Translate My Messages To" setting
 
 ### Whisper translation (TinyTweaks integration)
-- `/w player /tr message` → sends original whisper + translated whisper **only to target**
+- `/w player /tr message` → sends **only translated whisper** to target
 - Purple formatting (`#8973a1`) with `(secret msg for you)` matching TinyTweaks style
 - You see translation locally; recipient receives it formatted as private whisper
 
 ### Settings (Mod Config / Gale)
 | Section | Option | Type | Default |
 |---------|--------|------|---------|
-| General | Enabled | Toggle | On |
-| General | TargetLanguage | Dropdown (pt/en/es) | pt |
-| General | TranslateOwnMessages | Toggle | Off |
-| General | Provider | Dropdown | MyMemory |
-| Display | TranslationPrefix | String | TR |
-| Display | TranslationColor | Hex | #7FC8FF |
-| Outgoing | OutgoingCommandPrefix | String | /tr |
-| Outgoing | OutgoingTargetLanguage | Dropdown (pt/en/es) | en |
-| Outgoing | OutgoingSourceLanguage | Dropdown (pt/en/es) | pt |
+| **General** | Enabled | Toggle | On |
+| **General** | Target Language | Dropdown (100+ langs) | pt |
+| **Display** | Translation Prefix | String | TR |
+| **Display** | Translation Color | Hex | #7FC8FF |
+| **Outgoing** | Translate My Messages To | Dropdown (100+ langs) | en |
 
 ## Dependencies
 - [BepInExPack_PEAK](https://thunderstore.io/c/peak/p/BepInEx/BepInExPack_PEAK/) 5.4.75301+
@@ -41,7 +38,7 @@ Automatic chat translation for **PEAK** (via [PeakTextChat](https://thunderstore
 
 ## Installation
 1. Install dependencies above via Thunderstore/Gale
-2. Download `afxgg-PeakChatTranslator-0.2.0.zip` from Thunderstore
+2. Download `afxgg-PeakChatTranslator-0.2.3.zip` from Thunderstore
 3. Install via Gale or extract to `BepInEx/plugins/`
 
 ## Local Build

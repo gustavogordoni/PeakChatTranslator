@@ -15,7 +15,7 @@ internal static class TextChatDisplayPatch
         if (!Plugin.Enabled.Value) return;
         if (messageData == null) return;
 
-        var targetLang = Plugin.TargetLanguage.Value?.Trim() ?? "pt";
+        var targetLang = Plugin.GetLanguageCode(Plugin.TargetLanguage.Value ?? "pt");
         if (string.IsNullOrWhiteSpace(targetLang)) return;
 
         var rawMessage = RichTextRegex.Replace(messageData.message, string.Empty).Trim();

@@ -1,47 +1,44 @@
 # PeakChatTranslator
 
-Tradução automática de chat para **PEAK** (via [PeakTextChat](https://thunderstore.io/c/peak/p/borealityy/PeakTextChat/)).
-
 **Português** | [🇺🇸 English](https://github.com/gustavogordoni/PeakChatTranslator/blob/main/README.md)
+
+Tradução automática de chat para **PEAK** (via [PeakTextChat](https://thunderstore.io/c/peak/p/borealityy/PeakTextChat/)).
 
 ## Funcionalidades
 
 ### Tradução de mensagens recebidas
 - Traduz automaticamente mensagens de outros jogadores para o idioma configurado
 - Exibe a mensagem original + tradução logo abaixo com prefixo colorido `[TR-XX]`
-- Suporta **PT**, **EN**, **ES** (seleção via dropdown no Mod Config)
-- Provedor padrão: **MyMemory** (gratuito, sem API key, com auto-detect de idioma)
+- Suporta **100+ idiomas** via MyMemory (gratuito, sem API key, auto-detect)
+- Inclui idiomas asiáticos: Coreano (ko), Japonês (ja), Chinês (zh), Russo (ru), Árabe (ar), Hindi (hi), Tailandês (th), Vietnamita (vi), e muitos mais
 
 ### Tradução de mensagens enviadas (comando)
-- `/tr sua mensagem` → envia original + tradução pública para todos
-- Idiomas configuráveis: `OutgoingSourceLanguage` (seu idioma) → `OutgoingTargetLanguage` (idioma alvo)
+- `/tr sua mensagem` → envia **apenas a mensagem traduzida** (sem duplicar o original)
+- Evita tradução duplicada quando o destinatário também tem o mod
+- Idioma alvo configurável em "Translate My Messages To" (Traduzir Minhas Mensagens Para)
 
-### Whisper traduzido (integração com TinyTweaks)
-- `/w jogador /tr mensagem` → envia whisper original + whisper traduzido **apenas para o alvo**
+### Tradução de sussurros (integração com TinyTweaks)
+- `/w jogador /tr mensagem` → envia **apenas o sussurro traduzido** para o alvo
 - Formatação roxa (`#8973a1`) com `(secret msg for you)` igual ao TinyTweaks
-- Você vê a tradução localmente; o destinatário recebe formatado como whisper privado
+- Você vê a tradução localmente; o destinatário recebe formatado como sussurro privado
 
 ### Configurações (Mod Config / Gale)
 | Seção | Opção | Tipo | Padrão |
 |-------|-------|------|--------|
-| General | Enabled | Toggle | On |
-| General | TargetLanguage | Dropdown (pt/en/es) | pt |
-| General | TranslateOwnMessages | Toggle | Off |
-| General | Provider | Dropdown | MyMemory |
-| Display | TranslationPrefix | String | TR |
-| Display | TranslationColor | Hex | #7FC8FF |
-| Outgoing | OutgoingCommandPrefix | String | /tr |
-| Outgoing | OutgoingTargetLanguage | Dropdown (pt/en/es) | en |
-| Outgoing | OutgoingSourceLanguage | Dropdown (pt/en/es) | pt |
+| **General** | Enabled | Toggle | On |
+| **General** | Target Language | Dropdown (100+ idiomas) | pt |
+| **Display** | Translation Prefix | String | TR |
+| **Display** | Translation Color | Hex | #7FC8FF |
+| **Outgoing** | Translate My Messages To | Dropdown (100+ idiomas) | en |
 
 ## Dependências
 - [BepInExPack_PEAK](https://thunderstore.io/c/peak/p/BepInEx/BepInExPack_PEAK/) 5.4.75301+
 - [PeakTextChat](https://thunderstore.io/c/peak/p/borealityy/PeakTextChat/) 1.3.4+
-- Opcional: [TinyTweaks](https://thunderstore.io/c/peak/p/YonDev/TinyTweaks/) (para whispers `/w`)
+- Opcional: [TinyTweaks](https://thunderstore.io/c/peak/p/YonDev/TinyTweaks/) (para sussurros `/w`)
 
 ## Instalação
 1. Instale as dependências acima via Thunderstore/Gale
-2. Baixe o `afxgg-PeakChatTranslator-0.2.0.zip` do Thunderstore
+2. Baixe `afxgg-PeakChatTranslator-0.2.3.zip` do Thunderstore
 3. Instale via Gale ou extraia em `BepInEx/plugins/`
 
 ## Build local
