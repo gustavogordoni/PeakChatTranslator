@@ -16,6 +16,12 @@ using UnityEngine;
 
 namespace PeakChatTranslator;
 
+public enum TranslationProvider
+{
+    Google,
+    MyMemory
+}
+
 [BepInDependency("com.borealityy.peaktextchat")]
 [BepInAutoPlugin]
 public partial class Plugin : BaseUnityPlugin
@@ -28,6 +34,7 @@ public partial class Plugin : BaseUnityPlugin
 
     internal static ConfigEntry<string> TranslationPrefix = null!;
     internal static ConfigEntry<string> TranslationColor = null!;
+    internal static ConfigEntry<TranslationProvider> TranslationProviderConfig = null!;
 
     internal static ConfigEntry<string> OutgoingTargetLanguage = null!;
 
@@ -52,6 +59,9 @@ public partial class Plugin : BaseUnityPlugin
 
         OutgoingTargetLanguage = Config.Bind("Outgoing", "Translate My Messages To", GetLanguageDisplayName("en"),
             new ConfigDescription("When using /tr, translate your messages into this language", langOptions));
+
+        TranslationProviderConfig = Config.Bind("General", "Translation Provider", TranslationProvider.Google,
+            "Translation service to use. Google = better quality, MyMemory = fallback");
 
         Harmony.CreateAndPatchAll(typeof(TextChatDisplayPatch), Id);
         Harmony.CreateAndPatchAll(typeof(SendChatMessagePatch), Id);
@@ -164,6 +174,7 @@ public partial class Plugin : BaseUnityPlugin
             textToTranslate,
             sourceLang,
             targetLang,
+            TranslationProviderConfig.Value,
             onResult,
             onError));
     }
@@ -231,6 +242,7 @@ public partial class Plugin : BaseUnityPlugin
             textToTranslate,
             sourceLang,
             targetLang,
+            TranslationProviderConfig.Value,
             onResult,
             onError));
     }

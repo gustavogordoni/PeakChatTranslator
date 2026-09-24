@@ -28,6 +28,7 @@ internal static class TextChatDisplayPatch
         Plugin.Instance.StartCoroutine(TranslationService.TranslateCoroutine(
             rawMessage,
             targetLang,
+            Plugin.TranslationProviderConfig.Value,
             result => Plugin.Instance.HandleTranslationResult(result, messageData),
             error => Plugin.Log.LogWarning($"Translation failed for \"{rawMessage}\": {error}")));
     }
