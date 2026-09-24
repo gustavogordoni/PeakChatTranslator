@@ -2,9 +2,6 @@ using System;
 using System.Text.RegularExpressions;
 using HarmonyLib;
 using PeakTextChat;
-using Photon.Pun;
-using Photon.Realtime;
-using UnityEngine;
 
 namespace PeakChatTranslator.Patches;
 
@@ -12,24 +9,32 @@ namespace PeakChatTranslator.Patches;
 internal static class SendChatMessagePatch
 {
     private static readonly Regex WhisperTranslateRegex = new(@"^/w\s+(\S+)\s+/tr\s+(.+)$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+    private static readonly Regex TranslateCommandRegex = new(@"^/tr\s+(.+)$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-    private static void Postfix(string message)
+    // Prefix runs BEFORE original method. Return false to CANCEL original message.
+    private static bool Prefix(string message)
     {
-        if (!Plugin.Enabled.Value) return;
-        if (string.IsNullOrWhiteSpace(message)) return;
-        if (Plugin.IsTranslationMessage(message)) return;
+        if (!Plugin.Enabled.Value) return true;
+        if (string.IsNullOrWhiteSpace(message)) return true;
+        if (Plugin.IsTranslationMessage(message)) return true;
 
-        var match = WhisperTranslateRegex.Match(message.Trim());
-        if (match.Success)
+        var whisperMatch = WhisperTranslateRegex.Match(message.Trim());
+        if (whisperMatch.Success)
         {
-            var targetName = match.Groups[1].Value;
-            var textToTranslate = match.Groups[2].Value;
+            var targetName = whisperMatch.Groups[1].Value;
+            var textToTranslate = whisperMatch.Groups[2].Value;
             Plugin.Instance?.SendWhisperTranslation(targetName, textToTranslate);
-            return;
+            return false; // CANCEL original whisper message
         }
 
-        if (!Plugin.TryExtractCommandMessage(message, out var toTranslate)) return;
+        var translateMatch = TranslateCommandRegex.Match(message.Trim());
+        if (translateMatch.Success)
+        {
+            var textToTranslate = translateMatch.Groups[1].Value;
+            Plugin.Instance?.SendOutgoingTranslation(textToTranslate);
+            return false; // CANCEL original message with /tr
+        }
 
-        Plugin.Instance?.SendOutgoingTranslation(toTranslate);
+        return true; // Allow normal messages through
     }
 }
