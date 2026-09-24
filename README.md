@@ -1,36 +1,68 @@
 # PeakChatTranslator
 
-Describe your project here!
+Automatic chat translation for **PEAK** (via [PeakTextChat](https://thunderstore.io/c/peak/p/borealityy/PeakTextChat/)).
 
-## Template Instructions
+[🇧🇷 Português](README.ptbr.md) | **English**
 
-You can remove this section after you've set up your project.
+## Features
 
-Next steps:
+### Incoming message translation
+- Automatically translates other players' messages to your configured language
+- Shows original message + translation below with colored prefix `[TR-XX]`
+- Supports **PT**, **EN**, **ES** (dropdown selection in Mod Config)
+- Default provider: **MyMemory** (free, no API key, auto-detect language)
 
-- Create a copy of the `Config.Build.user.props.template` file and name it `Config.Build.user.props`
-  - This will automate copying your plugin assembly to `BepInEx/plugins/`
-  - Configure the paths to point to your game path and your `BepInEx/plugins/`
-  - Game assembly references should work if the path to the game is valid
-- Search `TODO` in the whole project to see what you should configure or modify
+### Outgoing translation (command)
+- `/tr your message` → sends original + public translation to everyone
+- Configurable languages: `OutgoingSourceLanguage` (your language) → `OutgoingTargetLanguage` (target language)
 
-### Thunderstore Packaging & Publishing
+### Whisper translation (TinyTweaks integration)
+- `/w player /tr message` → sends original whisper + translated whisper **only to target**
+- Purple formatting (`#8973a1`) with `(secret msg for you)` matching TinyTweaks style
+- You see translation locally; recipient receives it formatted as private whisper
 
-This template comes with Thunderstore packaging built-in, using [ThunderPipe](<https://github.com/WarperSan/ThunderPipe>).
+### Settings (Mod Config / Gale)
+| Section | Option | Type | Default |
+|---------|--------|------|---------|
+| General | Enabled | Toggle | On |
+| General | TargetLanguage | Dropdown (pt/en/es) | pt |
+| General | TranslateOwnMessages | Toggle | Off |
+| General | Provider | Dropdown | MyMemory |
+| Display | TranslationPrefix | String | TR |
+| Display | TranslationColor | Hex | #7FC8FF |
+| Outgoing | OutgoingCommandPrefix | String | /tr |
+| Outgoing | OutgoingTargetLanguage | Dropdown (pt/en/es) | en |
+| Outgoing | OutgoingSourceLanguage | Dropdown (pt/en/es) | pt |
 
-You can build Thunderstore packages by building with release configuration:
+## Dependencies
+- [BepInExPack_PEAK](https://thunderstore.io/c/peak/p/BepInEx/BepInExPack_PEAK/) 5.4.75301+
+- [PeakTextChat](https://thunderstore.io/c/peak/p/borealityy/PeakTextChat/) 1.3.4+
+- Optional: [TinyTweaks](https://thunderstore.io/c/peak/p/YonDev/TinyTweaks/) (for `/w` whispers)
 
-```sh
-dotnet build -c Release -v d
+## Installation
+1. Install dependencies above via Thunderstore/Gale
+2. Download `afxgg-PeakChatTranslator-0.2.0.zip` from Thunderstore
+3. Install via Gale or extract to `BepInEx/plugins/`
+
+## Local Build
+```bash
+dotnet build -c Release
+# DLL at artifacts/bin/PeakChatTranslator/release/Gordoni.PeakChatTranslator.dll
+# Thunderstore package at artifacts/thunderstore/release/
 ```
 
-> [!NOTE]  
-> You can learn about different build options with `dotnet build --help`.  
-> `-c` is short for `--configuration` and `-v d` is `--verbosity detailed`.
+---
 
-The built package will be found at `./artifacts/thunderstore/`.
+## Credits / AI Disclosure
 
-You can directly publish to Thunderstore by including `-p:PublishTS=true` in the command. See the `Config.Build.user.props.template` file for configuration instructions.
+> **This project was developed almost entirely with AI.**
+>
+> - **Tool**: [opencode](https://opencode.ai/) (software engineering CLI)
+> - **Model**: Nemotron 3 Ultra Free (NVIDIA)
+> - All C# code, Harmony patches, BepInEx/Photon integration, configs, ThunderPipe build/packaging, and documentation were generated/iterated via opencode prompts.
+> - AI analyzed base mods (PeakTextChat, TinyTweaks) to properly integrate via public APIs and Photon events.
 
-> [!TIP]  
-> Make sure the local package looks fine in `./artifacts/thunderstore/` first, then publish with `dotnet build -c Release -p:PublishTS=true -v d` to avoid potential mistakes.
+Human contribution: requirements review, in-game testing, UX decisions (dropdowns, commands, colors), publishing.
+
+## License
+MIT — see [LICENSE](LICENSE).
