@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.2.3] - 2026-09-24
+### Added
+- Full MyMemory language support (100+ languages including Asian: ko, ja, zh, ru, etc.)
+- Dropdown language selectors for both incoming and outgoing translation
+- `/tr` now sends ONLY translated message (no duplicate original) to prevent double-translation
+
+### Changed
+- Removed unused configs: Provider, LibreTranslateUrl, LibreTranslateApiKey, TranslateOwnMessages, OutgoingCommandPrefix, OutgoingSourceLanguage
+- Simplified UI: General (Enabled, Target Language), Display (Prefix, Color), Outgoing (Translate My Messages To)
+- `/tr` command hardcoded, source language auto-uses Target Language
+- Outgoing whisper (`/w player /tr`) sends only translated whisper with purple formatting
+
+### Fixed
+- Duplicate translation issue: recipients no longer receive both original + translated
+- Whisper translations now use correct purple color (#8973a1) with "(secret msg for you)"
+
 ## [0.2.2] - 2026-09-24
 ### Fixed
 - README cross-links now use absolute GitHub URLs (work on Thunderstore page)
