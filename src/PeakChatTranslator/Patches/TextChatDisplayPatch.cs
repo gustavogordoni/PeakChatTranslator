@@ -29,6 +29,9 @@ internal static class TextChatDisplayPatch
         if (string.IsNullOrWhiteSpace(rawMessage))
             return;
 
+        if (Plugin.IsTranslationMessage(rawMessage))
+            return;
+
         if (Plugin.Instance == null)
             return;
 

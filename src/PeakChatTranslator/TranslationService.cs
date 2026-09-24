@@ -46,14 +46,28 @@ internal static class TranslationService
         Action<TranslationResult> onResult,
         Action<string> onError)
     {
-        var cacheKey = $"{provider}|{targetLang}|{text}";
+        yield return TranslateWithSourceCoroutine(text, "auto", targetLang, provider, libreBaseUrl, libreApiKey, onResult, onError);
+    }
+
+    public static IEnumerator TranslateWithSourceCoroutine(
+        string text,
+        string sourceLang,
+        string targetLang,
+        TranslatorProvider provider,
+        string libreBaseUrl,
+        string libreApiKey,
+        Action<TranslationResult> onResult,
+        Action<string> onError)
+    {
+        var effectiveSource = string.Equals(sourceLang, "auto", StringComparison.OrdinalIgnoreCase) ? "auto" : sourceLang;
+        var cacheKey = $"{provider}|{effectiveSource}|{targetLang}|{text}";
         if (Cache.TryGetValue(cacheKey, out var cached))
         {
-            onResult(new TranslationResult(cached, cached == text ? targetLang : "?"));
+            onResult(new TranslationResult(cached, cached == text ? targetLang : effectiveSource));
             yield break;
         }
 
-        using var request = BuildRequest(text, targetLang, provider, libreBaseUrl, libreApiKey);
+        using var request = BuildRequest(text, effectiveSource, targetLang, provider, libreBaseUrl, libreApiKey);
         if (request == null)
             yield break;
 
@@ -88,21 +102,22 @@ internal static class TranslationService
         onResult(result);
     }
 
-    private static UnityWebRequest BuildRequest(string text, string targetLang, TranslatorProvider provider, string libreBaseUrl, string libreApiKey)
+    private static UnityWebRequest BuildRequest(string text, string sourceLang, string targetLang, TranslatorProvider provider, string libreBaseUrl, string libreApiKey)
     {
         return provider switch
         {
-            TranslatorProvider.MyMemory => BuildMyMemoryRequest(text, targetLang),
+            TranslatorProvider.MyMemory => BuildMyMemoryRequest(text, sourceLang, targetLang),
             TranslatorProvider.Google => BuildGoogleRequest(text, targetLang),
             TranslatorProvider.LibreTranslate => BuildLibreRequest(text, targetLang, libreBaseUrl, libreApiKey),
             _ => throw new ArgumentOutOfRangeException(nameof(provider))
         };
     }
 
-    private static UnityWebRequest BuildMyMemoryRequest(string text, string targetLang)
+    private static UnityWebRequest BuildMyMemoryRequest(string text, string sourceLang, string targetLang)
     {
+        var src = string.Equals(sourceLang, "auto", StringComparison.OrdinalIgnoreCase) ? "Autodetect" : sourceLang;
         var url = "https://api.mymemory.translated.net/get?q=" + Uri.EscapeDataString(text)
-                + $"&langpair=Autodetect|{Uri.EscapeDataString(targetLang)}";
+                + $"&langpair={Uri.EscapeDataString(src)}|{Uri.EscapeDataString(targetLang)}";
 
         var request = UnityWebRequest.Get(url);
         request.timeout = 15;
