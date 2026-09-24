@@ -21,7 +21,7 @@ internal static class TextChatDisplayPatch
             && messageData.character == Character.localCharacter)
             return;
 
-        var targetLang = Plugin.TargetLanguage.Value;
+        var targetLang = Plugin.TargetLanguage.Value?.Trim() ?? "pt";
         if (string.IsNullOrWhiteSpace(targetLang))
             return;
 

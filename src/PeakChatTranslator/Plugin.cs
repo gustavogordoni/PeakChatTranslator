@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Text.RegularExpressions;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
@@ -39,17 +40,30 @@ public partial class Plugin : BaseUnityPlugin
         Log = Logger;
 
         Enabled = Config.Bind("General", "Enabled", true, "Enable/disable chat translation");
-        TargetLanguage = Config.Bind("General", "TargetLanguage", "pt", "The language to translate incoming chat messages into (e.g. pt, en, es, de, fr, ja)");
-        TranslateOwnMessages = Config.Bind("General", "TranslateOwnMessages", false, "Also translate your own received messages in the chat display");
-        Provider = Config.Bind("General", "Provider", TranslatorProvider.MyMemory, "Translation provider to use (MyMemory is free and needs no API key)");
-        LibreTranslateUrl = Config.Bind("General", "LibreTranslateUrl", "https://libretranslate.com/translate", "LibreTranslate API endpoint");
-        LibreTranslateApiKey = Config.Bind("General", "LibreTranslateApiKey", "", "Optional LibreTranslate api key");
-        TranslationPrefix = Config.Bind("Display", "TranslationPrefix", "TR", "Prefix shown before the translated text, e.g. [TR]");
-        TranslationColor = Config.Bind("Display", "TranslationColor", "#7FC8FF", "Color (hex) used for the translated line, e.g. #7FC8FF");
+        
+        var langOptions = new AcceptableValueList<string>("pt", "en", "es");
+        
+        TargetLanguage = Config.Bind("General", "TargetLanguage", "pt",
+            new ConfigDescription("Language to translate incoming chat messages into", langOptions));
+        TranslateOwnMessages = Config.Bind("General", "TranslateOwnMessages", false, 
+            "Also translate your own received messages in the chat display");
+        Provider = Config.Bind("General", "Provider", TranslatorProvider.MyMemory, 
+            "Translation provider to use (MyMemory is free and needs no API key)");
+        LibreTranslateUrl = Config.Bind("General", "LibreTranslateUrl", "https://libretranslate.com/translate", 
+            "LibreTranslate API endpoint");
+        LibreTranslateApiKey = Config.Bind("General", "LibreTranslateApiKey", "", 
+            "Optional LibreTranslate api key");
+        TranslationPrefix = Config.Bind("Display", "TranslationPrefix", "TR", 
+            "Prefix shown before the translated text, e.g. [TR]");
+        TranslationColor = Config.Bind("Display", "TranslationColor", "#7FC8FF", 
+            "Color (hex) used for the translated line, e.g. #7FC8FF");
 
-        OutgoingCommandPrefix = Config.Bind("Outgoing", "OutgoingCommandPrefix", "/tr", "Command prefix to trigger outgoing translation (e.g. /tr, /translate). Message after prefix gets translated and sent as second line.");
-        OutgoingTargetLanguage = Config.Bind("Outgoing", "OutgoingTargetLanguage", "en", "Language to translate your outgoing messages into (e.g. en, es, de, fr)");
-        OutgoingSourceLanguage = Config.Bind("Outgoing", "OutgoingSourceLanguage", "pt", "Your language (source for outgoing translation). Use 'auto' for auto-detect");
+        OutgoingCommandPrefix = Config.Bind("Outgoing", "OutgoingCommandPrefix", "/tr", 
+            "Command prefix to trigger outgoing translation (e.g. /tr, /translate). Message after prefix gets translated and sent as second line.");
+        OutgoingTargetLanguage = Config.Bind("Outgoing", "OutgoingTargetLanguage", "en",
+            new ConfigDescription("Language to translate your outgoing messages into", langOptions));
+        OutgoingSourceLanguage = Config.Bind("Outgoing", "OutgoingSourceLanguage", "pt",
+            new ConfigDescription("Your language (source for outgoing translation)", langOptions));
 
         Harmony.CreateAndPatchAll(typeof(TextChatDisplayPatch), Id);
         Harmony.CreateAndPatchAll(typeof(SendChatMessagePatch), Id);
@@ -144,10 +158,8 @@ public partial class Plugin : BaseUnityPlugin
         if (string.IsNullOrWhiteSpace(textToTranslate))
             return;
 
-        var targetLang = OutgoingTargetLanguage.Value?.Trim();
-        var sourceLang = OutgoingSourceLanguage.Value?.Trim();
-        if (string.IsNullOrEmpty(targetLang) || string.IsNullOrEmpty(sourceLang))
-            return;
+        var targetLang = OutgoingTargetLanguage.Value?.Trim() ?? "en";
+        var sourceLang = OutgoingSourceLanguage.Value?.Trim() ?? "pt";
         if (string.Equals(sourceLang, targetLang, StringComparison.OrdinalIgnoreCase))
             return;
 
@@ -196,5 +208,95 @@ public partial class Plugin : BaseUnityPlugin
             LibreTranslateApiKey.Value,
             onResult,
             onError));
+    }
+
+    internal void SendWhisperTranslation(string targetName, string textToTranslate)
+    {
+        if (!Enabled.Value)
+            return;
+        if (IsTranslationMessage(textToTranslate))
+            return;
+        if (string.IsNullOrWhiteSpace(textToTranslate))
+            return;
+
+        var targetPlayer = FindPlayerByName(targetName);
+        if (targetPlayer == null)
+        {
+            Log.LogWarning($"Whisper translation: player '{targetName}' not found");
+            return;
+        }
+
+        var targetLang = OutgoingTargetLanguage.Value?.Trim() ?? "en";
+        var sourceLang = OutgoingSourceLanguage.Value?.Trim() ?? "pt";
+        if (string.Equals(sourceLang, targetLang, StringComparison.OrdinalIgnoreCase))
+            return;
+
+        Action<TranslationResult> onResult = result =>
+        {
+            if (!Enabled.Value || string.IsNullOrWhiteSpace(result.Text))
+                return;
+            if (IsSameLanguage(result.SourceLang, targetLang))
+                return;
+
+            var prefix = $"TR-{targetLang.ToUpperInvariant()}";
+            var translatedText = result.Text;
+
+            // Formato whisper igual ao TinyTweaks: cor roxa #8973a1 + (secret msg for you)
+            var whisperColor = "#8973a1";
+            var translatedMsg = $"<color={whisperColor}>[{prefix}] {translatedText} <size=16><i>(secret msg for you)</i></size></color>";
+
+            try
+            {
+                var chatEventCode = (byte)81;
+                var payload = new object[]
+                {
+                    PhotonNetwork.LocalPlayer.NickName,
+                    translatedMsg,
+                    PhotonNetwork.LocalPlayer.UserId,
+                    false
+                };
+
+                PhotonNetwork.RaiseEvent(
+                    chatEventCode,
+                    payload,
+                    new RaiseEventOptions { TargetActors = new[] { targetPlayer.ActorNumber } },
+                    SendOptions.SendReliable
+                );
+
+                // Mostrar a tradução localmente para quem enviou
+                if (TextChatDisplay.instance != null)
+                {
+                    TextChatDisplay.instance.AddMessage(translatedMsg);
+                }
+            }
+            catch (Exception ex)
+            {
+                Plugin.Log.LogWarning($"Failed to send whisper translation: {ex.Message}");
+            }
+        };
+
+        Action<string> onError = error => Plugin.Log.LogWarning($"Whisper translation failed for '{textToTranslate}': {error}");
+
+        StartCoroutine(TranslationService.TranslateWithSourceCoroutine(
+            textToTranslate,
+            sourceLang,
+            targetLang,
+            Provider.Value,
+            LibreTranslateUrl.Value,
+            LibreTranslateApiKey.Value,
+            onResult,
+            onError));
+    }
+
+    private static Photon.Realtime.Player FindPlayerByName(string name)
+    {
+        var cleanName = Regex.Replace(name.ToLower(), @"</?color(=\w+|=[#\w]+)?>", string.Empty, RegexOptions.IgnoreCase);
+        foreach (var plr in PhotonNetwork.PlayerList)
+        {
+            var plrClean = Regex.Replace(plr.NickName.ToLower(), @"</?color(=\w+|=[#\w]+)?>", string.Empty, RegexOptions.IgnoreCase);
+            if (plrClean.Contains(cleanName, StringComparison.OrdinalIgnoreCase))
+                return plr;
+        }
+        return null;
     }
 }

@@ -17,9 +17,8 @@
 
   <!-- Shared Thunderstore metadata -->
   <PropertyGroup>
-    <ThunderstoreTeam>SeuTime</ThunderstoreTeam>
-    <!-- TODO: Add a link to your mod repository here (optional) -->
-    <RepositoryUrl></RepositoryUrl>
+    <ThunderstoreTeam>afxgg</ThunderstoreTeam>
+    <RepositoryUrl>https://github.com/gustavogordoni/PeakChatTranslator</RepositoryUrl>
   </PropertyGroup>
 
   <!-- Shared primary configuration for the project -->
