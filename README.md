@@ -2,7 +2,7 @@
 
 Automatic chat translation for **PEAK** (via [PeakTextChat](https://thunderstore.io/c/peak/p/borealityy/PeakTextChat/)).
 
-[🇧🇷 Português](README.ptbr.md) | **English**
+[🇧🇷 Português](https://github.com/gustavogordoni/PeakChatTranslator/blob/main/README.ptbr.md) | **English**
 
 ## Features
 

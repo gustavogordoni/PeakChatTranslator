@@ -1,6 +1,8 @@
 # Changelog
 
-## [0.2.1] - 2026-09-24
+## [0.2.2] - 2026-09-24
+### Fixed
+- README cross-links now use absolute GitHub URLs (work on Thunderstore page)
 ### Added
 - MyMemory provider (free, no API key, auto-detect) as default
 - Outgoing translation command `/tr` with dropdown language selection (PT/EN/ES)
