@@ -1,6 +1,6 @@
 # Changelog
 
-## [2.1.0] - 2026-09-24
+## [0.2.1] - 2026-09-24
 ### Added
 - MyMemory provider (free, no API key, auto-detect) as default
 - Outgoing translation command `/tr` with dropdown language selection (PT/EN/ES)
