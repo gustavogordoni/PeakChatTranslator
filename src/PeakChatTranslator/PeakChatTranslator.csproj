@@ -17,7 +17,7 @@
     <IsThunderstorePackable>true</IsThunderstorePackable>
     <!-- Package name on Thunderstore. Must not contain spaces ' ' or dashes '-'. -->
     <ThunderstoreName>PeakChatTranslator</ThunderstoreName>
-    <ThunderstoreDescription>Translates PeakTextChat chat messages to the language of your choice (Google or LibreTranslate).</ThunderstoreDescription>
+    <ThunderstoreDescription>Translates PeakTextChat messages via MyMemory (free, no API key). Supports 100+ languages including Asian. Features: incoming auto-translate, /tr command sends only translated message, whisper translation (/w player /tr).</ThunderstoreDescription>
     <!--
       Communities and package categories metadata for publishing with ThunderPipe.
       Communities: https://thunderstore.io/api/experimental/community/
