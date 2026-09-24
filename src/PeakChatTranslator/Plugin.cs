@@ -42,7 +42,7 @@ public partial class Plugin : BaseUnityPlugin
 
         Enabled = Config.Bind("General", "Enabled", true, "Enable/disable chat translation");
 
-        TargetLanguage = Config.Bind("General", "Target Language", GetLanguageDisplayName("pt"),
+        TargetLanguage = Config.Bind("General", "Target Language", GetLanguageDisplayName("en"),
             new ConfigDescription("Translate incoming messages into this language", langOptions));
 
         TranslationPrefix = Config.Bind("Display", "Translation Prefix", "TR",
@@ -249,15 +249,13 @@ public partial class Plugin : BaseUnityPlugin
 
     private static readonly Dictionary<string, string> LanguageDisplayNames = new(StringComparer.OrdinalIgnoreCase)
     {
-        ["auto"] = "Auto-detect (auto)",
-        ["pt"] = "Portuguese (pt)",
         ["pt-BR"] = "Português do Brasil (pt-BR)",
         ["pt-PT"] = "Português de Portugal (pt-PT)",
         ["en"] = "English (en)",
-        ["es"] = "Spanish (es)",
-        ["fr"] = "French (fr)",
-        ["de"] = "German (de)",
-        ["it"] = "Italian (it)",
+        ["es"] = "Spanish / Español (es)",
+        ["fr"] = "French / Français (fr)",
+        ["de"] = "German / Deutsch (de)",
+        ["it"] = "Italian / Italiano (it)",
         ["ru"] = "Russian / Русский (ru)",
         ["ja"] = "Japanese / 日本語 (ja)",
         ["ko"] = "Korean / 한국어 (ko)",
@@ -338,8 +336,7 @@ public partial class Plugin : BaseUnityPlugin
 
     private static string[] GetSupportedLanguages()
     {
-        var list = new List<string>(LanguageDisplayNames.Keys) { "auto" };
-        return list.Distinct().ToArray();
+        return LanguageDisplayNames.Keys.OrderBy(k => k).ToArray();
     }
 
     internal static string GetLanguageDisplayName(string code)
@@ -352,10 +349,10 @@ public partial class Plugin : BaseUnityPlugin
     internal static string GetLanguageCode(string displayName)
     {
         if (string.IsNullOrWhiteSpace(displayName))
-            return "pt";
+            return "en";
         var match = Regex.Match(displayName, @"\(([a-zA-Z0-9\-]+)\)$");
         if (match.Success)
             return match.Groups[1].Value;
-        return LanguageDisplayNames.FirstOrDefault(kvp => kvp.Value.Equals(displayName, StringComparison.OrdinalIgnoreCase)).Key ?? "pt";
+        return LanguageDisplayNames.FirstOrDefault(kvp => kvp.Value.Equals(displayName, StringComparison.OrdinalIgnoreCase)).Key ?? "en";
     }
 }

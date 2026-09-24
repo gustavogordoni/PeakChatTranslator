@@ -36,7 +36,8 @@ internal static class TranslationService
         Action<TranslationResult> onResult,
         Action<string> onError)
     {
-        yield return TranslateWithSourceCoroutine(text, "auto", targetLang, onResult, onError);
+        // MyMemory doesn't support "auto" as source; default to English for incoming messages
+        yield return TranslateWithSourceCoroutine(text, "en", targetLang, onResult, onError);
     }
 
     public static IEnumerator TranslateWithSourceCoroutine(
@@ -46,15 +47,14 @@ internal static class TranslationService
         Action<TranslationResult> onResult,
         Action<string> onError)
     {
-        var effectiveSource = string.Equals(sourceLang, "auto", StringComparison.OrdinalIgnoreCase) ? "auto" : sourceLang;
-        var cacheKey = $"{effectiveSource}|{targetLang}|{text}";
+        var cacheKey = $"{sourceLang}|{targetLang}|{text}";
         if (Cache.TryGetValue(cacheKey, out var cached))
         {
-            onResult(new TranslationResult(cached, cached == text ? targetLang : effectiveSource));
+            onResult(new TranslationResult(cached, cached == text ? targetLang : sourceLang));
             yield break;
         }
 
-        using var request = BuildMyMemoryRequest(text, effectiveSource, targetLang);
+        using var request = BuildMyMemoryRequest(text, sourceLang, targetLang);
         if (request == null)
             yield break;
 
@@ -85,9 +85,8 @@ internal static class TranslationService
 
     private static UnityWebRequest BuildMyMemoryRequest(string text, string sourceLang, string targetLang)
     {
-        var src = string.Equals(sourceLang, "auto", StringComparison.OrdinalIgnoreCase) ? "auto" : sourceLang;
         var url = "https://api.mymemory.translated.net/get?q=" + Uri.EscapeDataString(text)
-                + $"&langpair={Uri.EscapeDataString(src)}|{Uri.EscapeDataString(targetLang)}";
+                + $"&langpair={Uri.EscapeDataString(sourceLang)}|{Uri.EscapeDataString(targetLang)}";
 
         var request = UnityWebRequest.Get(url);
         request.timeout = 15;
