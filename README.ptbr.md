@@ -62,4 +62,4 @@ dotnet build -c Release
 Código humano: revisão de requisitos, testes no jogo, decisões de UX (dropdowns, comandos, cores), publicação.
 
 ## Licença
-MIT — veja [LICENSE](LICENSE).
+GPLv3 — veja [LICENSE](LICENSE).
