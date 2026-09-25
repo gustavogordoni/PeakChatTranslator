@@ -62,4 +62,4 @@ dotnet build -c Release
 Human contribution: requirements review, in-game testing, UX decisions (dropdowns, commands, colors), publishing.
 
 ## License
-MIT — see [LICENSE](LICENSE).
+GPLv3 — see [LICENSE](LICENSE).
