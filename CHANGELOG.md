@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.4] - 2026-09-24
+### Documentation
+- Updated README: command format is `/tr /w player message` (inverted format)
+- Updated README: Google Translate is now the default translation provider
+- Updated version references to 0.2.4
+
 ## [0.2.3] - 2026-09-24
 ### Added
 - Full MyMemory language support (100+ languages including Asian: ko, ja, zh, ru, etc.)

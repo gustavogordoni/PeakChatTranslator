@@ -1,6 +1,6 @@
 # PeakChatTranslator
 
-**Português** | [🇺🇸 English](https://github.com/gustavogordoni/PeakChatTranslator/blob/main/README.md)
+**Português** | [English](https://github.com/gustavogordoni/PeakChatTranslator/blob/main/README.md)
 
 Tradução automática de chat para **PEAK** (via [PeakTextChat](https://thunderstore.io/c/peak/p/borealityy/PeakTextChat/)).
 
@@ -9,7 +9,7 @@ Tradução automática de chat para **PEAK** (via [PeakTextChat](https://thunder
 ### Tradução de mensagens recebidas
 - Traduz automaticamente mensagens de outros jogadores para o idioma configurado
 - Exibe a mensagem original + tradução logo abaixo com prefixo colorido `[TR-XX]`
-- Suporta **100+ idiomas** via MyMemory (gratuito, sem API key, auto-detect)
+- Suporta **100+ idiomas** via Google Translate (primário) com fallback MyMemory (gratuito, sem API key, auto-detect)
 - Inclui idiomas asiáticos: Coreano (ko), Japonês (ja), Chinês (zh), Russo (ru), Árabe (ar), Hindi (hi), Tailandês (th), Vietnamita (vi), e muitos mais
 
 ### Tradução de mensagens enviadas (comando)
@@ -18,7 +18,7 @@ Tradução automática de chat para **PEAK** (via [PeakTextChat](https://thunder
 - Idioma alvo configurável em "Translate My Messages To" (Traduzir Minhas Mensagens Para)
 
 ### Tradução de sussurros (integração com TinyTweaks)
-- `/w jogador /tr mensagem` → envia **apenas o sussurro traduzido** para o alvo
+- `/tr /w jogador mensagem` → envia **apenas o sussurro traduzido** para o alvo
 - Formatação roxa (`#8973a1`) com `(secret msg for you)` igual ao TinyTweaks
 - Você vê a tradução localmente; o destinatário recebe formatado como sussurro privado
 
@@ -38,7 +38,7 @@ Tradução automática de chat para **PEAK** (via [PeakTextChat](https://thunder
 
 ## Instalação
 1. Instale as dependências acima via Thunderstore/Gale
-2. Baixe `afxgg-PeakChatTranslator-0.2.3.zip` do Thunderstore
+2. Baixe `afxgg-PeakChatTranslator-0.2.4.zip` do Thunderstore
 3. Instale via Gale ou extraia em `BepInEx/plugins/`
 
 ## Build local
