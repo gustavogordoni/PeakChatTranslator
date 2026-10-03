@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.5] - 2026-10-03
+### Documentation
+- Added screenshots section with configuration guidance
+- Improved README screenshots: shows which settings to configure for incoming/outgoing translation
+- Updated version references to 0.2.5
+
 ## [0.2.4] - 2026-09-24
 ### Documentation
 - Updated README: command format is `/tr /w player message` (inverted format)

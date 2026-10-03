@@ -4,6 +4,34 @@
 
 Tradução automática de chat para **PEAK** (via [PeakTextChat](https://thunderstore.io/c/peak/p/borealityy/PeakTextChat/)).
 
+## Capturas de tela
+
+### Tradução de mensagens recebidas
+Um jogador com **Português** como idioma nativo recebe uma mensagem em inglês, com a tradução aparecendo logo abaixo:
+
+**Configurações usadas:**
+- **General → Target Language**: `Português (pt)` (seu idioma nativo)
+- O outro jogador escreve em inglês, você vê traduzido para português automaticamente
+
+![Tradução de entrada](screenshots/englishTranslatedInto%20Portuguese.png)
+
+### Tradução de mensagens enviadas (comando `/tr`)
+Digite `/tr` seguido da sua mensagem para enviar **apenas a versão traduzida**:
+
+**Configurações usadas:**
+- **General → Target Language**: `Português (pt)` (seu idioma nativo — origem da tradução)
+- **Outgoing → Translate My Messages To**: `English (en)` (idioma que os outros vão receber)
+
+| Antes (você digita em Português) | Depois (enviado ao chat em Inglês) |
+|---------------------|--------------------------|
+| ![Frase original](screenshots/originalSentencePortuguese.png) | ![Mensagem traduzida](screenshots/translatedIntoEnglish.png) |
+
+**Exemplo de uso:**
+1. Defina **General → Target Language** para seu idioma nativo (ex: `Português (pt)`)
+2. Defina **Outgoing → Translate My Messages To** para o idioma que os outros devem receber (ex: `English (en)`)
+3. No chat, digite: `/tr estou escrevendo em português e será traduzido para inglês`
+3. Apenas a mensagem traduzida aparece: `[TR-EN] I am writing in Portuguese and it will be translated into English`
+
 ## Funcionalidades
 
 ### Tradução de mensagens recebidas
@@ -15,7 +43,8 @@ Tradução automática de chat para **PEAK** (via [PeakTextChat](https://thunder
 ### Tradução de mensagens enviadas (comando)
 - `/tr sua mensagem` → envia **apenas a mensagem traduzida** (sem duplicar o original)
 - Evita tradução duplicada quando o destinatário também tem o mod
-- Idioma alvo configurável em "Translate My Messages To" (Traduzir Minhas Mensagens Para)
+- Idioma de origem = **General → Target Language** (seu idioma nativo)
+- Idioma alvo = **Outgoing → Translate My Messages To** (o que os outros recebem)
 
 ### Tradução de sussurros (integração com TinyTweaks)
 - `/tr /w jogador mensagem` → envia **apenas o sussurro traduzido** para o alvo
@@ -26,10 +55,10 @@ Tradução automática de chat para **PEAK** (via [PeakTextChat](https://thunder
 | Seção | Opção | Tipo | Padrão |
 |-------|-------|------|--------|
 | **General** | Enabled | Toggle | On |
-| **General** | Target Language | Dropdown (100+ idiomas) | pt |
+| **General** | Target Language | Dropdown (100+ idiomas) | Português (pt) |
 | **Display** | Translation Prefix | String | TR |
 | **Display** | Translation Color | Hex | #7FC8FF |
-| **Outgoing** | Translate My Messages To | Dropdown (100+ idiomas) | en |
+| **Outgoing** | Translate My Messages To | Dropdown (100+ idiomas) | English (en) |
 
 ## Dependências
 - [BepInExPack_PEAK](https://thunderstore.io/c/peak/p/BepInEx/BepInExPack_PEAK/) 5.4.75301+
@@ -38,7 +67,7 @@ Tradução automática de chat para **PEAK** (via [PeakTextChat](https://thunder
 
 ## Instalação
 1. Instale as dependências acima via Thunderstore/Gale
-2. Baixe `afxgg-PeakChatTranslator-0.2.4.zip` do Thunderstore
+2. Baixe `afxgg-PeakChatTranslator-0.2.5.zip` do Thunderstore
 3. Instale via Gale ou extraia em `BepInEx/plugins/`
 
 ## Build local
