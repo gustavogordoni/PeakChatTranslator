@@ -9,60 +9,65 @@ Automatic chat translation for **PEAK** (via [PeakTextChat](https://thunderstore
 ### Incoming message translation
 A player with **Portuguese** as native language receives an English message, with translation appearing below:
 
-**Settings used:**
-- **General → Target Language**: `Portuguese (pt)` (your native language)
-- The other player writes in English, you see it translated to Portuguese automatically
+**Settings used in screenshot:**
+- **General → Target Language**: `Portuguese (pt-BR)` (your native language)
+- Other player writes in English → you see it translated to Portuguese automatically
 
 ![Incoming translation](screenshots/englishTranslatedInto%20Portuguese.png)
 
 ### Outgoing translation (`/tr` command)
 Type `/tr` followed by your message to send **only the translated version**:
 
-**Settings used:**
-- **General → Target Language**: `Portuguese (pt)` (your native language — source for translation)
-- **Outgoing → Translate My Messages To**: `English (en)` (target language for your messages)
+**Settings used in screenshot:**
+- **General → Target Language**: `Portuguese (pt-BR)` (your native language — source)
+- **Outgoing → Translate My Messages To**: `English (en)` (language others receive)
 
-| Before (you type in Portuguese) | After (sent to chat in English) |
-|-------------------|----------------------|
+| Before (you type in your language) | After (sent to chat translated) |
+|-----------------------------------|----------------------------------|
 | ![Original sentence](screenshots/originalSentencePortuguese.png) | ![Translated message](screenshots/translatedIntoEnglish.png) |
 
-**Example workflow:**
-1. Set **General → Target Language** to your native language (e.g., `Portuguese (pt)`)
-2. Set **Outgoing → Translate My Messages To** to the language you want others to receive (e.g., `English (en)`)
-3. In chat, type: `/tr estou escrevendo em português e será traduzido para inglês`
-3. Only the translated message appears: `[TR-EN] I am writing in Portuguese and it will be translated into English`
+## How it works
 
-## Features
+### Incoming messages (automatic)
+- Every message from other players is automatically translated to **your** language
+- Original message stays visible; translation appears below with `[TR-XX]` prefix
+- Configure: **General → Target Language** = your native/preferred language
 
-### Incoming message translation
-- Automatically translates other players' messages to your configured language
-- Shows original message + translation below with colored prefix `[TR-XX]`
-- Supports **100+ languages** via Google Translate (primary) with MyMemory fallback (free, no API key, auto-detect)
-- Includes Asian languages: Korean (ko), Japanese (ja), Chinese (zh), Russian (ru), Arabic (ar), Hindi (hi), Thai (th), Vietnamese (vi), and many more
-
-### Outgoing translation (command)
-- `/tr your message` → sends **only the translated message** (no duplicate original)
-- Prevents double-translation when recipients also have the mod
-- Source language = **General → Target Language** (your native language)
+### Outgoing messages (command `/tr`)
+- Type `/tr your message` → sends **only the translated version** (original is blocked)
+- Source language = **General → Target Language** (your language)
 - Target language = **Outgoing → Translate My Messages To** (what others receive)
+- Works for any language pair supported by Google Translate/MyMemory
 
-### Whisper translation (TinyTweaks integration)
+### Whisper translation (TinyTweaks)
 - `/tr /w player message` → sends **only translated whisper** to target
-- Purple formatting (`#8973a1`) with `(secret msg for you)` matching TinyTweaks style
-- You see translation locally; recipient receives it formatted as private whisper
+- Purple formatting with `(secret msg for you)` matching TinyTweaks style
 
-### Settings (Mod Config / Gale)
+## Settings (Mod Config)
 | Section | Option | Type | Default |
 |---------|--------|------|---------|
 | **General** | Enabled | Toggle | On |
-| **General** | Target Language | Dropdown (100+ langs) | Portuguese (pt) |
+| **General** | Target Language | Dropdown (100+ langs) | English (en) |
 | **Display** | Translation Prefix | String | TR |
 | **Display** | Translation Color | Hex | #7FC8FF |
 | **Outgoing** | Translate My Messages To | Dropdown (100+ langs) | English (en) |
 
+## Quick setup guide
+1. **General → Target Language** = the language YOU read/write in (your native language)
+2. **Outgoing → Translate My Messages To** = the language OTHERS should receive your messages in
+3. Use `/tr message` to send translated messages
+4. Use `/tr /w player message` for translated whispers
+
+## Features
+- **100+ languages** via Google Translate (primary) with MyMemory fallback (free, no API key)
+- Automatic incoming translation + manual outgoing via `/tr`
+- Whisper translation with TinyTweaks integration
+- Double-translation prevention when both parties have the mod
+- Asian language support: Korean, Japanese, Chinese, Russian, Arabic, Hindi, Thai, Vietnamese, etc.
+
 ## Dependencies
-- [BepInExPack_PEAK](https://thunderstore.io/c/peak/p/BepInEx/BepInExPack_PEAK/) 5.4.75301+
-- [PeakTextChat](https://thunderstore.io/c/peak/p/borealityy/PeakTextChat/) 1.3.4+
+- [BepInExPack_PEAK](https://thunderstore.io/c/peak/p/BepInEx/BepInExPack_PEAK/)
+- [PeakTextChat](https://thunderstore.io/c/peak/p/borealityy/PeakTextChat/)
 - Optional: [TinyTweaks](https://thunderstore.io/c/peak/p/YonDev/TinyTweaks/) (for `/w` whispers)
 
 ## Installation

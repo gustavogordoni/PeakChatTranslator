@@ -2,9 +2,9 @@
 
 ## [0.2.5] - 2026-10-03
 ### Documentation
-- Added screenshots section with configuration guidance
-- Improved README screenshots: shows which settings to configure for incoming/outgoing translation
-- Updated version references to 0.2.5
+- Rewrote README screenshots section: generalized for any language pair (not just PT→EN)
+- Added clear configuration guidance: Target Language = your language, Translate My Messages To = others' language
+- Screenshots now contextualized as examples (PT/EN) with general explanation
 
 ## [0.2.4] - 2026-09-24
 ### Documentation
