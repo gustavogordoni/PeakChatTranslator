@@ -13,7 +13,7 @@ Um jogador com **Português** como idioma nativo recebe uma mensagem em inglês,
 - **General → Target Language**: `Português do Brasil (pt-BR)` (seu idioma nativo)
 - O outro jogador escreve em inglês → você vê traduzido para português automaticamente
 
-![Tradução de entrada](screenshots/englishTranslatedInto%20Portuguese.png)
+![Tradução de entrada](https://raw.githubusercontent.com/gustavogordoni/PeakChatTranslator/refs/heads/main/screenshots/englishTranslatedInto%20Portuguese.png)
 
 ### Tradução de mensagens enviadas (comando `/tr`)
 Digite `/tr` seguido da sua mensagem para enviar **apenas a versão traduzida**:
@@ -24,7 +24,7 @@ Digite `/tr` seguido da sua mensagem para enviar **apenas a versão traduzida**:
 
 | Antes (você digita no seu idioma) | Depois (enviado ao chat traduzido) |
 |-----------------------------------|----------------------------------|
-| ![Frase original](screenshots/originalSentencePortuguese.png) | ![Mensagem traduzida](screenshots/translatedIntoEnglish.png) |
+| ![Frase original](https://raw.githubusercontent.com/gustavogordoni/PeakChatTranslator/refs/heads/main/screenshots/originalSentencePortuguese.png) | ![Mensagem traduzida](https://raw.githubusercontent.com/gustavogordoni/PeakChatTranslator/refs/heads/main/screenshots/translatedIntoEnglish.png) |
 
 ## Como funciona
 

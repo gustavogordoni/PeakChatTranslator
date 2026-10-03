@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.6] - 2026-10-03
+### Documentation
+- Updated screenshot image paths to absolute GitHub URLs for Thunderstore compatibility
+- Images now load correctly on Thunderstore package page
+
 ## [0.2.5] - 2026-10-03
 ### Documentation
 - Rewrote README screenshots section: generalized for any language pair (not just PT→EN)

@@ -13,7 +13,7 @@ A player with **Portuguese** as native language receives an English message, wit
 - **General → Target Language**: `Portuguese (pt-BR)` (your native language)
 - Other player writes in English → you see it translated to Portuguese automatically
 
-![Incoming translation](screenshots/englishTranslatedInto%20Portuguese.png)
+![Incoming translation](https://raw.githubusercontent.com/gustavogordoni/PeakChatTranslator/refs/heads/main/screenshots/englishTranslatedInto%20Portuguese.png)
 
 ### Outgoing translation (`/tr` command)
 Type `/tr` followed by your message to send **only the translated version**:
@@ -24,7 +24,7 @@ Type `/tr` followed by your message to send **only the translated version**:
 
 | Before (you type in your language) | After (sent to chat translated) |
 |-----------------------------------|----------------------------------|
-| ![Original sentence](screenshots/originalSentencePortuguese.png) | ![Translated message](screenshots/translatedIntoEnglish.png) |
+| ![Original sentence](https://raw.githubusercontent.com/gustavogordoni/PeakChatTranslator/refs/heads/main/screenshots/originalSentencePortuguese.png) | ![Translated message](https://raw.githubusercontent.com/gustavogordoni/PeakChatTranslator/refs/heads/main/screenshots/translatedIntoEnglish.png) |
 
 ## How it works
 
