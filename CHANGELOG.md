@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.2.7] - 2026-10-03
+### Changed
+- Updated mod icon
+
 ## [0.2.6] - 2026-10-03
 ### Documentation
 - Updated screenshot image paths to absolute GitHub URLs for Thunderstore compatibility
