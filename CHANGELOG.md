@@ -1,5 +1,13 @@
 # Changelog
 
+# Changelog
+
+## [0.2.8] - 2026-10-30
+### Fixed
+- Fixed regex pattern for /tr command to properly detect language specification
+- Restored fallback to configured "Outgoing → Translate My Messages To" setting when no language specified in command
+- Client-side translation of /tr messages now appears below the message (same behavior as normal incoming messages)
+
 ## [0.2.7] - 2026-10-03
 ### Changed
 - Updated mod icon
