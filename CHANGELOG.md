@@ -2,6 +2,11 @@
 
 # Changelog
 
+## [0.2.9] - 2026-10-31
+### Fixed
+- Fixed /tr command with English output language not displaying message (equality check en/en was skipping translation)
+- Removed redundant source/target language equality check in outgoing translation methods
+
 ## [0.2.8] - 2026-10-30
 ### Fixed
 - Fixed regex pattern for /tr command to properly detect language specification

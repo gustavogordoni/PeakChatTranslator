@@ -134,7 +134,9 @@ public partial class Plugin : BaseUnityPlugin
 
         var targetLang = GetLanguageCode(OutgoingTargetLanguage.Value ?? "en");
         var sourceLang = GetLanguageCode(TargetLanguage.Value ?? "pt");
-        if (string.Equals(sourceLang, targetLang, StringComparison.OrdinalIgnoreCase)) return;
+        // Note: We intentionally do NOT check if sourceLang == targetLang here,
+        // because the user explicitly uses /tr to translate their message to the target language.
+        // This check is only applicable for incoming message translation.
 
         Action<TranslationResult> onResult = result =>
         {
@@ -194,7 +196,9 @@ public partial class Plugin : BaseUnityPlugin
 
         var targetLang = GetLanguageCode(OutgoingTargetLanguage.Value ?? "en");
         var sourceLang = GetLanguageCode(TargetLanguage.Value ?? "pt");
-        if (string.Equals(sourceLang, targetLang, StringComparison.OrdinalIgnoreCase)) return;
+        // Note: We intentionally do NOT check if sourceLang == targetLang here,
+        // because the user explicitly uses /tr to translate their message to the target language.
+        // This check is only applicable for incoming message translation.
 
         Action<TranslationResult> onResult = result =>
         {
